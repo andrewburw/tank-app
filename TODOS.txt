@@ -1,0 +1,19 @@
+Nuzhno sdelatj v table all fetch kogda sdelan modyfy - obnovlenije tablici ------------------------->--> done
+MERN ostonovilsja: 1:25
+modal => sdelatj bage v date last update -------------------------------------------------------> done
+sdelatj proverku dannih prihodjashih na server s pomoshju kakogo to modulja iz video ----------> done
+peredelatj ICON belij fon na prozrachnij
+sdelatj galochku v menju search i samo menju v collapse bootstrap.-------------------------> done
+.navbar:hover { background-color: red; color: red; } - sortirovka na onhover
+dopisatj triogolniki kogda sortirovka aktevirovana
+perepisatj oshibki v login v backend Wrong login info! -------------------------> done
+
+poka oshibka s vvodom v pole pass i login nelzja nazhatj login -------------------------> done
+
+ //https://bootsnipp.com/snippets/mMpAq 
+
+ dobavtj opredelenije imeni posle login dlja togo chto bi mozhno bilo postitj 
+
+ optimizacija v header
+
+ostonovilsja na tom chto bi sdelatj proverku tokena v edit tank ------------> done

@@ -1,0 +1,61 @@
+
+.leaflet-container {
+  
+  height: 25rem;
+  width: 100%;
+}
+
+
+.footer {
+  text-align: center;
+ bottom: 0;
+ width: 100%;
+
+ 
+
+ background-color: #f5f5f5;
+
+}
+
+.table-Colors {
+
+     background-color: white;
+
+}
+
+.brandLogo
+{
+    position: relative;
+     
+    height: auto;
+    max-height: 2rem;
+}
+
+.tester {
+  
+  
+    overflow-x:scroll;
+}
+
+/* Login / Register */
+
+.body-green-btn {
+	  background-color: #27ae60;
+	  color: white;
+
+
+}
+
+.body-green-btn:hover {
+	background-color: #219250;
+	color: white;
+  }
+
+  .textPasLog {
+    font-weight: 500;
+  }
+
+  .regLinkcolor {
+
+    color: #219250
+  }
