@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const Tanks = require('./db_schemas/tanksSchema.js');
+const User = require('./db_schemas/users.js');
 const jwt = require('jsonwebtoken');
+const checkAntiSpamDate = require('./custome_modules/dateChecker.js');
 
  //res.header("Access-Control-Allow-Origin", "*");
 const confitoken = 'drive faster then you'
@@ -20,25 +22,32 @@ router.get('/tanks', async (req, res, next) => {
 
 router.put("/modyfytank",verifyToken , async(req, res) => { 
    
- 
+  //console.log(req.body)
   
   try {
-    const test =  jwt.verify(req.token,confitoken) 
-   
-    
+    const tkn =  jwt.verify(req.token,confitoken) 
+    //checkAntiSpamDate.checkDate({user})
+     
     const {id,dataToChange} = req.body;
-    let data = await Tanks.findOneAndUpdate({"id": id}, {$set: dataToChange},{new: true})
-    /*
-    let user = await Tanks.findOneAndUpdate({"id": id}, {$set: dataToChange},{new: true})
-     *** poka ne pridumal po ID najti usera ili po name skorej vsego po nejm potomu chto ono unikalnoje
-
-     if (data === user) {
-        throw new Error('User Not Found');
-      }
-
+  //  let data = await Tanks.findOneAndUpdate({"id": id}, {$set: dataToChange},{new: true})
+    let user = await User.findOne({_id: tkn.userID});
+    console.log(checkAntiSpamDate.checkDate({posts: user.postsInOneDay,date: user.postDay},10))
+    
+    //let user = await User.findOneAndUpdate({"id": tkn.userID}, {$set: dataToChange},{new: true})
+     // protection from spam.10 posts per day set.Check data -> if today set "postsInOneDay" increment.
+     //checkAntiSpamDate.checkDate()
 
 
-    */
+
+
+
+    // if (data === user) {
+      //  throw new Error('User Not Found');
+     // }
+
+
+
+    
 
       if (data === null) {
         throw new Error('Tank Not Found');
