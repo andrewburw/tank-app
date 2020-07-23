@@ -74,7 +74,7 @@ router.post('/login',[
       const token = jwt.sign(
         {userID: user.id},
          'drive faster then you',
-        {expiresIn: '2m'})
+        {expiresIn: '5h'})
       
         res.json({token, userID: user.name,loginError: false})
 

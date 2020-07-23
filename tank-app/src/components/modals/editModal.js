@@ -18,7 +18,8 @@ class EditModal extends Component {
                 '98_Field':true,
                 'DD_Field':true,
 
-          }
+          },
+      buttonSendActive : true
 
    };
 
@@ -93,7 +94,7 @@ let uslessVar = Object.values(this.state.errorsInField).indexOf(false) < 0; // n
        this.setState({dataErrorBar: true});
    } else {
        // **************** SENDING MODYFIED DATA TO SERVER *******************
-     
+       this.setState({buttonSendActive: false});
       const auth = 'Bearer ' + localStorage.getItem('token');
       const userName = localStorage.getItem('user_name') || 'unknown';
      let dataToSend = {
@@ -117,20 +118,27 @@ let uslessVar = Object.values(this.state.errorsInField).indexOf(false) < 0; // n
       },
       body: JSON.stringify(dataToSend)
   
-    }).then(response => response.json()
-			 
-      ).then(res =>{
+    }).then(response =>  response.json()
+        
+    ).then(res =>{
+        
       this.setState({dataErrorBar: false});
-       console.log(res.message);
+     
        if(res.message.name === "TokenExpiredError"){
 
         throw new Error('Auth Expiried.Plz login!');
 
        }
+
+       if (res.errorStatus === true) {
+        throw new Error(res.message);
+       }
+
+
        this.props.refreshTable(false);
        setTimeout(() => {
         this.handleClickClose();
-      }, 1000);
+      }, 800);
        
     }).catch(err => {
          console.error(err)
@@ -195,9 +203,14 @@ let uslessVar = Object.values(this.state.errorsInField).indexOf(false) < 0; // n
 
     alertBar = <div className="alert alert-success" role="alert">Data send success!</div>
   }
+// button send 
 
+let buttonSend =  <button type="button" onClick={this.hendlePostData} className="btn btn-primary">Post</button>
 
-
+console.log(this.state.buttonSendActive)
+if (this.state.buttonSendActive === false) {
+  buttonSend =  <button type="button" onClick={this.hendlePostData} className="btn btn-primary" disabled>Post</button>
+}
   return (
     <div>
     <div className='modal fade show'  style={{display: 'block'}} tabIndex="-1" role="dialog">
@@ -229,7 +242,7 @@ let uslessVar = Object.values(this.state.errorsInField).indexOf(false) < 0; // n
       </div>
 
       <div className="modal-footer">
-          <button type="button" onClick={this.hendlePostData} className="btn btn-primary">Post</button>
+         {buttonSend}
         <button type="button" onClick={this.handleClickClose} className="btn btn-secondary" data-dismiss="modal">Cancel</button>
       </div>
 

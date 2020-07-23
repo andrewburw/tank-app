@@ -116,10 +116,7 @@ sendData = (event) => {
 
 
 }
-removeToken = (event) => {
-	event.preventDefault();
-	localStorage.removeItem('token');
-}
+
 /*
 	  {
 		"email": "valera1@mail.lv",
@@ -130,31 +127,54 @@ removeToken = (event) => {
 testAuth = (event) => {
 	event.preventDefault();
 	// ************** data test to server fnc *****************
-   
 	const auth = 'Bearer ' + localStorage.getItem('token');
+	const userName = localStorage.getItem('user_name') || 'unknown';
+   let dataToSend = {
+	"id": 'fdfefe',
+	"dataToChange": {
+	"gass95": '1.20',
+	"gass98": '1.20',
+	"gassDD": '1.20',
+	"dateLastUpdate": "23.07.2020, 18:00:23",
+	"userUpdated": 'test'
+	}
+   }
 	
-		  fetch('http://localhost:3001/api/auth/test', {
-		   method: 'POST',
-		   headers: {
-			 'Content-Type': 'application/json;charset=utf-8',
-			 'Authorization': auth
-		   },
-		   body: JSON.stringify({test: 'lolik'})
-	   
-		 }).then(response => response.json()
-				
-		 ).then(data => {
-			 
-			   console.log(data)			
-			   
-			
-			
-		 }).catch(err => {
-			  console.error(err)
-			  
-		 });
+   
+   
+   fetch('http://localhost:3001/api/modyfytank', {
+	method: 'PUT',
+	headers: {
+	  'Content-Type': 'application/json;charset=utf-8',
+	  'Authorization': auth
+	},
+	body: JSON.stringify(dataToSend)
+
+  }).then(response => { 
+	  
 	
+	console.log(response.status);
+	
+	return response.json()}
+		   
+	).then(res =>{
+	
+	
+	 if(res.message.name === "TokenExpiredError"){
+
+	  throw new Error('Auth Expiried.Plz login!');
+
+	 }
+	 console.log(res)
+	
+	 
+  }).catch(err => {
+	   console.error(err)
+	  
+  });
 }
+	
+
 
 
 
@@ -241,7 +261,7 @@ testAuth = (event) => {
 			    </div>
 				{buttnSend}
 			    <button  onClick={this.testAuth} className="btn btn-block body-green-btn">Test send</button>
-				<button  onClick={this.removeToken} className="btn btn-block body-green-btn">Test remove</button>
+				
 			  </form>
 			  <hr />
 			  <p><a href=".html#" className='regLinkcolor' onClick={this.handleClicklostPass} id="lost-btn">Lost your password?</a>  / &nbsp;
