@@ -105,7 +105,7 @@ if (page === 'fethError') {
 
       <main role="main" className="container">
 
-      <LoginPage />
+      {render_page}
       
       </main>
 

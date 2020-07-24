@@ -14,14 +14,58 @@ class TableAll extends Component {
               showModalEdit: false,
               showModalView: false,
               sortBySelected: 'sortDef',
-              showSort: true
+              showSort: true,
+              favorites: '',
+              
+              
            };
        }
 
 componentDidMount(){
   // recived data from start page//
   this.setState({ data2: this.props.backEndData});
-     
+
+  if (this.props.isLoged) {
+    
+  
+ // geting favorites from server:
+ 
+	
+	// ************** data test to server fnc *****************
+	const auth = 'Bearer ' + localStorage.getItem('token');
+
+   fetch('http://localhost:3001/api/favorites', {
+	method: 'GET',
+	headers: {
+	  'Content-Type': 'application/json;charset=utf-8',
+	  'Authorization': auth
+	}
+
+  }).then(response => { 
+	  
+	
+	console.log(response.status);
+	
+	return response.json()}
+		   
+	).then(res =>{
+	
+	
+	 if(res.message.name === "TokenExpiredError"){
+
+	  throw new Error('Auth Expiried.Plz login!');
+
+	 }
+	 
+   this.setState({ favorites: res.favorites.join()});
+	 
+  }).catch(err => {
+	   console.error(err)
+	  
+  });
+
+ 
+  }
 
 }
 
@@ -88,7 +132,10 @@ handleClickShowSort = () => {
  
 
 }
+refreshThisComponent = () => {
+  this.componentDidMount()
 
+}
   render() {
 //<TableModal data = {this.state.selected} showModal = {this.state.showModals}  closeModal ={this.closeModal }/>
  let displayData = Array.from(this.state.data2);
@@ -108,7 +155,9 @@ handleClickShowSort = () => {
                                closeModal ={this.closeModal}
                                showModalEdit = {this.showModalEditFn}
                                showOnMap = {this.showOnMapDataSend}
-                               isLoggedIn={this.props.isLoged} />
+                               isLoggedIn={this.props.isLoged}
+                               favorites={this.state.favorites}
+                               refreshFromFav={this.refreshThisComponent} />
  }
 
 
@@ -126,6 +175,21 @@ handleClickShowSort = () => {
      sortedData = displayData.sort((a, b) => Number(a.gass98) - Number(b.gass98));
   } else if (this.state.sortBySelected === 'sortDD') {
      sortedData = displayData.sort((a, b) => Number(a.gassDD) - Number(b.gassDD));
+  } else if(this.state.sortBySelected === 'favorites'){
+    //sortedData = displayData.sort((a, b) => Number(a.gassDD) - Number(b.gassDD));
+    let result = [];
+    let fav = this.state.favorites.split(','); // for better view
+     displayData.forEach((val,index)=>{
+        for(let i=0; i <= fav.length;i++){
+        if(val.id === fav[i]  ){
+         
+         result.push(val);
+       }
+      
+        }
+    sortedData = result;
+    
+      })
   }
 
 // =========================== date part ==========================

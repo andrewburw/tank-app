@@ -4,8 +4,8 @@ import logo from '../pict/icons/zapr.png';
 class TableModal extends Component {
   state = {
     recivData: this.props.data,
-    isLogged1s: this.props.isLoggedIn // recived status from header component
-    
+    isLogged1s: this.props.isLoggedIn, // recived status from header component
+    favorites: this.props.favorites
   };
 
 
@@ -29,13 +29,99 @@ handleClickShowEdit = () => {
    // show Edit modal when pressed EDIT button
 }
 
-handleClickAddToFavorites = () => {
+handleClickAddToFavorites = (event) => {
+	event.preventDefault();
+	// ************** send favorites to server *****************
+	const auth = 'Bearer ' + localStorage.getItem('token');
+	const userName = localStorage.getItem('user_name') || 'unknown';
+   let dataToSend = {
+	"id": this.props.data[0].id
+   }
+	
+   
+   
+   fetch('http://localhost:3001/api/addfavorites', {
+	method: 'PUT',
+	headers: {
+	  'Content-Type': 'application/json;charset=utf-8',
+	  'Authorization': auth
+  },
+  body:JSON.stringify(dataToSend)
+  }).then(response => { 
+	  
+	
+	console.log(response.status);
+	
+	return response.json()}
+		   
+	).then(res =>{
+	
+	
+	 if(res.message.name === "TokenExpiredError"){
 
- console.log('adding to favorites...');
+	  throw new Error('Auth Expiried.Plz login!');
+
+   }
+   window.alert('Added to favorites!')
+   this.props.closeModal(false)
+   this.props.refreshFromFav()
+	
+	 
+  }).catch(err => {
+	   console.error(err)
+	  
+  });
  
 
 }
 
+handleClickremoveFromFavorites = (event) => {
+  
+  if (this.props.isLoggedIn) {
+    console.log('removed')
+  
+    // remove favorites:
+      const auth = 'Bearer ' + localStorage.getItem('token');
+      let dataToSend = {
+        "id": this.props.data[0].id
+         }
+    fetch('http://localhost:3001/api/removefavorites', {
+     method: 'PUT',
+     headers: {
+       'Content-Type': 'application/json;charset=utf-8',
+       'Authorization': auth
+     },
+     body:JSON.stringify(dataToSend)
+   
+     }).then(response => { 
+       
+     
+     console.log(response.status);
+     
+     return response.json()}
+          
+     ).then(res =>{
+     
+     
+      if(res.message.name === "TokenExpiredError"){
+   
+       throw new Error('Auth Expiried.Plz login!');
+   
+      }
+      
+      
+      window.alert(res.message)
+      this.props.closeModal(false)
+      this.props.refreshFromFav()
+     }).catch(err => {
+        console.error(err)
+       
+     });
+   
+    
+     }
+
+}
 handleClickShowOnMap = () => {
 
    this.props.showOnMap([this.props.data[0].positionLong,this.props.data[0].positionLat,this.props.data[0].id]);
@@ -51,10 +137,20 @@ handleClickShowOnMap = () => {
  let buttonFavorites = <button type="button" onClick={()=>{window.alert('You must login!!')}} className="btn  btn-info btn-sm disabled">Add to Favorites</button>
     if (this.state.isLogged1s) {
       buttonEdit = <button type="button" onClick={this.handleClickShowEdit} className="btn btn-warning btn-sm">Edit</button>
-      buttonFavorites = <button type="button" onClick={this.handleClickAddToFavorites} className="btn  btn-info btn-sm">Add to Favorites</button>
 
     } 
+  // check if station is in favorites
  
+  
+  if (this.state.favorites.includes(this.props.data[0].id) && this.state.isLogged1s) {
+    buttonFavorites = <button type="button" onClick={this.handleClickremoveFromFavorites} className="btn  btn-info btn-sm">Remove from Favorites</button>
+
+  } 
+  
+  if(!this.state.favorites.includes(this.props.data[0].id) && this.state.isLogged1s) {
+    buttonFavorites = <button type="button" onClick={this.handleClickAddToFavorites} className="btn  btn-info btn-sm">Add to Favorites</button>
+
+  }
 
   return (
     <div>

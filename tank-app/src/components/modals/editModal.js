@@ -207,7 +207,7 @@ let uslessVar = Object.values(this.state.errorsInField).indexOf(false) < 0; // n
 
 let buttonSend =  <button type="button" onClick={this.hendlePostData} className="btn btn-primary">Post</button>
 
-console.log(this.state.buttonSendActive)
+
 if (this.state.buttonSendActive === false) {
   buttonSend =  <button type="button" onClick={this.hendlePostData} className="btn btn-primary" disabled>Post</button>
 }

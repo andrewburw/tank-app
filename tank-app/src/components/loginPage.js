@@ -130,19 +130,12 @@ testAuth = (event) => {
 	const auth = 'Bearer ' + localStorage.getItem('token');
 	const userName = localStorage.getItem('user_name') || 'unknown';
    let dataToSend = {
-	"id": 'fdfefe',
-	"dataToChange": {
-	"gass95": '1.20',
-	"gass98": '1.20',
-	"gassDD": '1.20',
-	"dateLastUpdate": "23.07.2020, 18:00:23",
-	"userUpdated": 'test'
-	}
+	"id": 'ec73758e-10cc'
    }
 	
    
    
-   fetch('http://localhost:3001/api/modyfytank', {
+   fetch('http://localhost:3001/api/favorites', {
 	method: 'PUT',
 	headers: {
 	  'Content-Type': 'application/json;charset=utf-8',

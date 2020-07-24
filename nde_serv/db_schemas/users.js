@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
         name: {type: String, required: true, unique: true},
         postsInOneDay: {type: Number},  // how mutch post User posted in this day
         postDay: {type: String},   // day - last User posted data
-        favorites: [{type: String}]
+        favoriteTank: [{type: Array}]
 
 
 },{collection: 'users'});
