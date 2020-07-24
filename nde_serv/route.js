@@ -22,14 +22,14 @@ router.get('/tanks', async (req, res, next) => {
 
 router.put("/modyfytank",verifyToken , async(req, res) => { 
    
-  //console.log(req.body)
+  
   
   try {
     const tkn =  jwt.verify(req.token,confitoken) 
     
      
     const {id,dataToChange} = req.body;
-  //  let data = await Tanks.findOneAndUpdate({"id": id}, {$set: dataToChange},{new: true})
+  
     let user = await User.findOne({_id: tkn.userID});
     let postPermission = checkAntiSpamDate.checkDate({posts: user.postsInOneDay,date: user.postDay},10,false);
 
@@ -55,23 +55,32 @@ router.put("/modyfytank",verifyToken , async(req, res) => {
        
   
    } catch (err) {
-     console.log(err);
+   
     res.status(500).json({ message: err.toString(),errorStatus:true});
     
    }
 });
 
 
-router.post('/newtank', async (req, res,next) => {
+router.post('/newtank',verifyToken , async (req, res) => {
   
   try {
-    const tanks = new Tanks(req.body);
+    const tkn =  jwt.verify(req.token,confitoken) 
+    
+    if (tkn.userID === '5ebc45179868a925dcd3bcbe1') {
+      const tanks = new Tanks(req.body);
+
+      await tanks.save()
+      res.json({message: "New tank saved!"});
+    } else {
+    
+      throw new Error("Sorry you don't have access!");
+    }
+  
    
-    await tanks.save()
-     res.status(201).json({message: "New tank saved!"});
-  } catch (e) {
+  } catch (err) {
           
-    res.status(500).json({message: "Somthing wrong!"});
+    res.status(500).json({ message: err.toString(),errorStatus:true});
     
   }
 });
@@ -93,7 +102,7 @@ router.put("/addfavorites",verifyToken , async(req, res) => {
 
 
    } catch (err) {
-     console.log(err);
+    
     res.status(500).json({ message: err.toString(),errorStatus:true});
     
    }
@@ -113,7 +122,7 @@ router.get("/favorites",verifyToken , async(req, res) => {
 
 
    } catch (err) {
-     console.log(err);
+     
     res.status(500).json({ message: err.toString(),errorStatus:true});
     
    }
@@ -135,7 +144,7 @@ router.put("/removefavorites",verifyToken , async(req, res) => {
 
 
    } catch (err) {
-     console.log(err);
+    
     res.status(500).json({ message: err.toString(),errorStatus:true});
     
    }

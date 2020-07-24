@@ -91,6 +91,9 @@ if (page === 'fethError') {
 }else if (page === 'registerPage') {
   render_page = <RegisterPage />
 
+}else if (page === 'registerPage') {
+  render_page = <RegisterPage />
+
 } else {
 
   render_page =   <MainPage callbackFromParent={this.myCallback} />;

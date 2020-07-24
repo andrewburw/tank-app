@@ -23,11 +23,11 @@ import React, { Component } from 'react';
 
      }
 
-    handleClickClose = () => {
-        this.props.closeModal(false);
+handleClickClose = () => {
+  this.props.closeModal(false);
 
-        // clossing modal
-      }
+ // clossing modal
+}
 
 // ----------------------------------------------------------
 
@@ -35,24 +35,24 @@ handleChangeName =(event) => {
 
     this.setState({name: event.target.value});
     this.setState({dateLastUpdate: new Date().toLocaleString() });
-  }
+}
 
 handleChangeAdress =(event) => {
 
-      this.setState({adress: event.target.value});
+  this.setState({adress: event.target.value});
 
-    }
+}
 
-      handleLongitude =(event) => {
+handleLongitude =(event) => {
 
-      this.setState({longitude: event.target.value});
+  this.setState({longitude: event.target.value});
 
 }
 
 
-       handleLatitude =(event) => {
+handleLatitude =(event) => {
 
-       this.setState({latitude: event.target.value});
+  this.setState({latitude: event.target.value});
 
 }
 // ---------------------------------------------------------
@@ -87,11 +87,11 @@ handleChangeAdress =(event) => {
         return uuidv4()
     }
 
-    handlePostData = () => {
+handlePostData = () => {
 
      let data = this.state
-
-    console.log(this.generateId());
+     const auth = 'Bearer ' + localStorage.getItem('token');
+    
 
     let dataToSend = {
       "id": this.generateId(),
@@ -111,14 +111,26 @@ handleChangeAdress =(event) => {
     method: 'POST',
     headers: {
       
-      'Content-Type': 'application/json;charset=utf-8'
+      'Content-Type': 'application/json;charset=utf-8',
+      'Authorization': auth
     },
     body: JSON.stringify(dataToSend)
 
-  }).then(res => {
+  }).then(response => response.json()
+   
+      
+  ).then(data1 =>{
+    
+    if(data1.errorStatus){
+      this.setState({dataErrorBar: true});
+      this.setState({dataErrorMsg:data1.message});
+     
+    } else {
+      this.setState({dataErrorBar: false});
 
-    this.setState({dataErrorBar: false});
-       // need this one statusDisabledButton
+    }
+
+
   }).catch(err => {
 
     this.setState({dataErrorBar: true});
@@ -128,9 +140,7 @@ handleChangeAdress =(event) => {
 
 
 
-     }
-
-//{this.state.dataErrorMsg
+}
 
 
     render() {
@@ -149,7 +159,7 @@ handleChangeAdress =(event) => {
 
     return (
       <div>
-      <div className='modal fade show'  style={{display: 'block'}} tabIndex="-1" role="dialog">
+      <div className='modal fade show  modal-gasStation'  style={{display: 'block'}} tabIndex="-1" role="dialog">
       <div className="modal-dialog modal-dialog-addDataContent" role="document">
       <div className="modal-content">
         <div className="modal-header">

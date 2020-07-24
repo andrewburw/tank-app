@@ -11,8 +11,7 @@ class TableAll extends Component {
            this.state = {
               data2: '',
               selected: '',
-              showModalEdit: false,
-              showModalView: false,
+              showPage: '',
               sortBySelected: 'sortDef',
               showSort: true,
               favorites: '',
@@ -75,8 +74,8 @@ clickTable = (event) => {
   
   
 event.persist()
-     
-  this.setState({ showModalView: true});
+
+this.setState({ showPage: 'modalView'});
    this.setState({selected: this.state.data2.filter(x => x.id === event.target.getAttribute('mykeyvalue'))});
 
 }
@@ -94,16 +93,19 @@ fetch('http://localhost:3001/api/tanks')
 }) 
 
 }
-
-showModalEditFn = () => {
-  this.setState({ showModalView: false});
-  this.setState({ showModalEdit: true});
+showModalWindow = (event) => {
+  this.setState({ showPage: event.target.id});
 
 }
+showModalEditFn = () => {
+  this.setState({ showPage: 'modalEdit'});
+  
+}
+
 closeModal = ()=> {
 
-   this.setState({showModalView: false});
-   this.setState({showModalEdit: false});
+   this.setState({showPage: ''});
+   
    // getting data from child component "tableModal" getting value FALSE
 }
 showOnMapDataSend = (data)=> {
@@ -137,19 +139,18 @@ refreshThisComponent = () => {
 
 }
   render() {
-//<TableModal data = {this.state.selected} showModal = {this.state.showModals}  closeModal ={this.closeModal }/>
  let displayData = Array.from(this.state.data2);
  let showModalComp = null;
  let sortedData = null;
 
 
- if (this.state.showModalEdit === true) {
+ if (this.state.showPage === 'modalEdit') {
    showModalComp =  <EditModal showModal = {this.state.showModals} 
                                data = {this.state.selected} 
                                closeModal ={this.closeModal } 
                                refreshTable={this.ifEditModalPostive} 
                                 />
- } else if (this.state.showModalView === true) {
+ } else if (this.state.showPage === 'modalView') {
    showModalComp = <TableModal data = {this.state.selected}
                                showModal = {this.state.showModals}
                                closeModal ={this.closeModal}
@@ -158,6 +159,18 @@ refreshThisComponent = () => {
                                isLoggedIn={this.props.isLoged}
                                favorites={this.state.favorites}
                                refreshFromFav={this.refreshThisComponent} />
+ } else if(this.state.showPage === 'addStation'){
+     const userName = localStorage.getItem('user_name') || 'unknown';
+   
+    if (userName === 'Droid') {
+      showModalComp = <AddGassStations closeModal ={this.closeModal} /> 
+    } else {
+      showModalComp = null;
+      window.alert('Sorry!!No permission!')
+    }
+    
+
+
  }
 
 
@@ -250,25 +263,22 @@ let adressTextShorter = (data) => {
    return data;
  }
 }
-// =========================== sort button collapse part part ==========================
+// =========================== sort button collapse part  ==========================
  let buttonSortShow = '';
  let displayCollapse = '';
  
 if (this.state.showSort) {
-  buttonSortShow =  <div className=" text-right"><button id="aa1" className="btn btn-dark btn-sm "  onClick={this.handleClickShowSort}>Show sort</button></div>
+  buttonSortShow =  <button id="aa1" className="btn btn-dark btn-sm "  onClick={this.handleClickShowSort}>Show sort</button>
   displayCollapse = 'collapse fade';
 } else {
-  buttonSortShow =  <div className=" text-right"><button id="aa2" className="btn btn-dark btn-sm "  onClick={this.handleClickShowSort}>Hide sort</button></div>
+  buttonSortShow = <button id="aa2" className="btn btn-dark btn-sm "  onClick={this.handleClickShowSort}>Hide sort</button>
   displayCollapse = 'collapse fade show';
 }
 
 
-
- // 
-//  {showModalComp}
-        // <AddGassStations /> 
   return (
     <div>
+      
      {showModalComp}
     <div className="conteiner-fluid row">
     <div className="col-8">
@@ -325,7 +335,7 @@ if (this.state.showSort) {
   </div>
  
   <br />
- {buttonSortShow}
+  <div className=" text-right"><button id="addStation" className="btn btn-light btn-sm "  onClick={this.showModalWindow}>Add Station</button> {buttonSortShow}</div>
         <br />
       <div className='row tester'>
       
@@ -350,12 +360,12 @@ if (this.state.showSort) {
 
               <tr key={item['id']} onClick={this.clickTable} mykeyvalue={item['id']} >
                 <th onClick={this.clickTable} mykeyvalue={item['id']} scope="row">{i}</th>
-                <td className="text-nowrap" onClick={this.clickTable} mykeyvalue={item['id']}>{item['name']}</td>
-                <td className="text-nowrap" onClick={this.clickTable} mykeyvalue={item['id']}>{item['gass95']}</td>
-                <td className="text-nowrap" onClick={this.clickTable} mykeyvalue={item['id']}>{item['gass98']}</td>
-                <td className="text-nowrap" onClick={this.clickTable} mykeyvalue={item['id']}>{item['gassDD']}</td>
-                <td className="text-nowrap" onClick={this.clickTable} mykeyvalue={item['id']}>{checkActualDate(item['dateLastUpdate'],item['id']) }</td>
-                <td className="text-nowrap" onClick={this.clickTable} mykeyvalue={item['id']}>{adressTextShorter(item['adress'])}</td>
+                <td className="text-nowrap" style={{'cursor': 'pointer'}} onClick={this.clickTable} mykeyvalue={item['id']}>{item['name']}</td>
+                <td className="text-nowrap" style={{'cursor': 'pointer'}} onClick={this.clickTable} mykeyvalue={item['id']}>{item['gass95']}</td>
+                <td className="text-nowrap" style={{'cursor': 'pointer'}} onClick={this.clickTable} mykeyvalue={item['id']}>{item['gass98']}</td>
+                <td className="text-nowrap" style={{'cursor': 'pointer'}} onClick={this.clickTable} mykeyvalue={item['id']}>{item['gassDD']}</td>
+                <td className="text-nowrap" style={{'cursor': 'pointer'}} onClick={this.clickTable} mykeyvalue={item['id']}>{checkActualDate(item['dateLastUpdate'],item['id']) }</td>
+                <td className="text-nowrap" style={{'cursor': 'pointer'}} onClick={this.clickTable} mykeyvalue={item['id']}>{adressTextShorter(item['adress'])}</td>
 
               </tr>)
 

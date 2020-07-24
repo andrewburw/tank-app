@@ -118,59 +118,6 @@ sendData = (event) => {
 
 }
 
-/*
-	  {
-		"email": "valera1@mail.lv",
-		"password": "a123dfgS",
-		"name": "Droid"
-		}
-       */
-testAuth = (event) => {
-	event.preventDefault();
-	// ************** data test to server fnc *****************
-	const auth = 'Bearer ' + localStorage.getItem('token');
-	const userName = localStorage.getItem('user_name') || 'unknown';
-   let dataToSend = {
-	"id": 'ec73758e-10cc'
-   }
-	
-   
-   
-   fetch('http://localhost:3001/api/favorites', {
-	method: 'PUT',
-	headers: {
-	  'Content-Type': 'application/json;charset=utf-8',
-	  'Authorization': auth
-	},
-	body: JSON.stringify(dataToSend)
-
-  }).then(response => { 
-	  
-	
-	console.log(response.status);
-	
-	return response.json()}
-		   
-	).then(res =>{
-	
-	
-	 if(res.message.name === "TokenExpiredError"){
-
-	  throw new Error('Auth Expiried.Plz login!');
-
-	 }
-	 console.log(res)
-	
-	 
-  }).catch(err => {
-	   console.error(err)
-	  
-  });
-}
-	
-
-
-
 
   render() {
   
@@ -254,12 +201,11 @@ testAuth = (event) => {
 				  </label>
 			    </div>
 				{buttnSend}
-			    <button  onClick={this.testAuth} className="btn btn-block body-green-btn">Test send</button>
 				
 			  </form>
 			  <hr />
-			 <p><a  href="#" className='regLinkcolor' onClick={this.handleClicklostPass} id="lost-btn">Lost your password?</a>  / &nbsp;
-			 <a  href="#"className='regLinkcolor' onClick={() =>this.props.sendToRegister('registerPage')} id="reg-btn">Register for an account?</a></p>
+			 <p><a  href="1" className='regLinkcolor' onClick={this.handleClicklostPass} id="lost-btn">Lost your password?</a>  / &nbsp;
+			 <a  href="1" className='regLinkcolor' onClick={() =>this.props.sendToRegister('registerPage')} id="reg-btn">Register for an account?</a></p>
 			  <div className="hidden" style={showRecovery} id="lost-form">
 			  <p>Enter your email address and we will send you a link to reset your password.</p>
 				<form>

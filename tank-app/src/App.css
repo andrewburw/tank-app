@@ -34,14 +34,14 @@
 .tester {
   
   
-    overflow-x:scroll;
+  overflow-x:scroll;
 }
 
 /* Login / Register */
 
 .body-green-btn {
-	  background-color: #27ae60;
-	  color: white;
+	background-color: #27ae60;
+	color: white;
 
 
 }
@@ -49,13 +49,17 @@
 .body-green-btn:hover {
 	background-color: #219250;
 	color: white;
-  }
+}
 
-  .textPasLog {
-    font-weight: 500;
-  }
+.textPasLog {
+  font-weight: 500;
+}
 
-  .regLinkcolor {
+.regLinkcolor {
 
-    color: #219250
-  }
+  color: #219250
+}
+
+.modal-gasStation {
+  overflow: scroll;
+}
