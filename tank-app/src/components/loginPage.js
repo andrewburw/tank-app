@@ -20,7 +20,8 @@ class LoginPage extends Component {
 
 
 	}
-handleClicklostPass =()=> {
+handleClicklostPass =(event)=> {
+	event.preventDefault()
 		// show password recovery
 	let currentState = this.state.showLostPass;
 	this.setState({ showLostPass: !currentState });
@@ -257,8 +258,8 @@ testAuth = (event) => {
 				
 			  </form>
 			  <hr />
-			  <p><a href=".html#" className='regLinkcolor' onClick={this.handleClicklostPass} id="lost-btn">Lost your password?</a>  / &nbsp;
-			 <a href=".html#" className='regLinkcolor' onClick={() =>this.props.sendToRegister('registerPage')} id="reg-btn">Register for an account?</a></p>
+			 <p><a  href="#" className='regLinkcolor' onClick={this.handleClicklostPass} id="lost-btn">Lost your password?</a>  / &nbsp;
+			 <a  href="#"className='regLinkcolor' onClick={() =>this.props.sendToRegister('registerPage')} id="reg-btn">Register for an account?</a></p>
 			  <div className="hidden" style={showRecovery} id="lost-form">
 			  <p>Enter your email address and we will send you a link to reset your password.</p>
 				<form>

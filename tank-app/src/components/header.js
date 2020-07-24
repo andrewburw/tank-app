@@ -52,26 +52,18 @@ signOut = () => {
 
 }
 
-  
+ changePage = (event) => {
 
-  handleClick = () => {
-    this.props.callbackFromParent('tablePage');
-  }
+    this.props.callbackFromParent(event.target.id);
+ } 
 
-  viewMapPage = () => {
-    this.props.callbackFromParent('mapPage');
-  }
-
-  viewLoginPage = (event) => {
-
-    this.props.callbackFromParent('loginPage');
-  }
+ 
 render() {
   //<form className="form-inline my-2 my-lg-0">
   //  <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search"></input>
   //  <button className="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
 //  </form>
-  let buttonAuth = <button className="btn btn-sm btn-outline-light" value="sign_in" onClick={this.viewLoginPage}>Sign in</button>
+  let buttonAuth = <button id="loginPage" className="btn btn-sm btn-outline-light" value="sign_in" onClick={this.changePage}>Sign in</button>
  if (this.state.authStatus) {
   buttonAuth = <button className="btn btn-sm btn-outline-light" value="sign_in" onClick={this.signOut}>Sign out</button>
  }
@@ -90,18 +82,18 @@ render() {
         <a className="nav-link" href="test">Home <span className="sr-only">(current)</span></a>
       </li>
       <li className="nav-item">
-        <div className="nav-link" role="button" style={{'cursor': 'pointer'}} onClick={this.viewMapPage}>View Map</div>
+        <div className="nav-link" id="mapPage" role="button" style={{'cursor': 'pointer'}} onClick={this.changePage}>View Map</div>
       </li>
       <li className="nav-item">
-        <a className="nav-link disabled" href="test" tabIndex="-1" aria-disabled="true">Disabled</a>
+        <div className="nav-link" id="tablePage" style={{'cursor': 'pointer'}} onClick={this.changePage} tabIndex="-1" >All</div>
       </li>
       <li className="nav-item dropdown">
         <a className="nav-link dropdown-toggle" href="test" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
         <div className="dropdown-menu" aria-labelledby="dropdown01">
 
-          <div className="dropdown-item"  role="button" onClick={this.handleClick}>View all gass tanks</div>
+          <div className="dropdown-item"  data-val="test" role="button" onClick={this.changePage}>View all gass tanks</div>
 
-          <a className="dropdown-item" href="test">Another action</a>
+          <div className="dropdown-item" id='page' value="page" onClick={this.changePage} >Another action</div>
           <a className="dropdown-item" href="test">Something else here</a>
         </div>
       </li>

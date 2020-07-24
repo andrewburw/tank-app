@@ -33,7 +33,7 @@ handleClickAddToFavorites = (event) => {
 	event.preventDefault();
 	// ************** send favorites to server *****************
 	const auth = 'Bearer ' + localStorage.getItem('token');
-	const userName = localStorage.getItem('user_name') || 'unknown';
+	
    let dataToSend = {
 	"id": this.props.data[0].id
    }
