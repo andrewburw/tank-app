@@ -107,7 +107,7 @@ handlePostData = () => {
     }
 
    //'Content-Type': 'application/x-www-form-urlencoded',
-        fetch('http://localhost:3001/api/newtank', {
+        fetch('https://tankapplatvia.herokuapp.com/api/newtank', {
     method: 'POST',
     headers: {
       

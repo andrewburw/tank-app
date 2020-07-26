@@ -15,15 +15,22 @@ class TableAll extends Component {
               sortBySelected: 'sortDef',
               showSort: true,
               favorites: '',
+              showBtnAdd: false
               
               
            };
        }
 
 componentDidMount(){
-  // recived data from start page//
+ 
+  const userName = localStorage.getItem('user_name') || 'unknown';
   this.setState({ data2: this.props.backEndData});
+  
+  if (userName === 'Droid') {
+    this.setState({showBtnAdd: true})
+  }
 
+  
   if (this.props.isLoged) {
     
   
@@ -33,7 +40,7 @@ componentDidMount(){
 	// ************** data test to server fnc *****************
 	const auth = 'Bearer ' + localStorage.getItem('token');
 
-   fetch('http://localhost:3001/api/favorites', {
+   fetch('https://tankapplatvia.herokuapp.com/api/favorites', {
 	method: 'GET',
 	headers: {
 	  'Content-Type': 'application/json;charset=utf-8',
@@ -160,18 +167,17 @@ refreshThisComponent = () => {
                                favorites={this.state.favorites}
                                refreshFromFav={this.refreshThisComponent} />
  } else if(this.state.showPage === 'addStation'){
-     const userName = localStorage.getItem('user_name') || 'unknown';
-   
-    if (userName === 'Droid') {
-      showModalComp = <AddGassStations closeModal ={this.closeModal} /> 
-    } else {
-      showModalComp = null;
-      window.alert('Sorry!!No permission!')
-    }
     
-
-
+    showModalComp = <AddGassStations closeModal ={this.closeModal} /> 
+    
  }
+
+// ---------------- button add station ----------------------------
+  let staAdd = <button id="addStation" className="btn btn-light btn-sm "  disabled>Add Station</button>
+
+if (this.state.showBtnAdd) {
+  staAdd = <button id="addStation" className="btn btn-light btn-sm "  onClick={this.showModalWindow}>Add Station</button>
+}
 
 
 
@@ -335,7 +341,7 @@ if (this.state.showSort) {
   </div>
  
   <br />
-  <div className=" text-right"><button id="addStation" className="btn btn-light btn-sm "  onClick={this.showModalWindow}>Add Station</button> {buttonSortShow}</div>
+  <div className="text-right"> {staAdd} {buttonSortShow}</div>
         <br />
       <div className='row tester'>
       

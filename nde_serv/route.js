@@ -67,7 +67,7 @@ router.post('/newtank',verifyToken , async (req, res) => {
   try {
     const tkn =  jwt.verify(req.token,confitoken) 
     
-    if (tkn.userID === '5ebc45179868a925dcd3bcbe1') {
+    if (tkn.userID === '5ebc45179868a925dcd3bcbe') {
       const tanks = new Tanks(req.body);
 
       await tanks.save()

@@ -22,7 +22,7 @@ class App extends Component {
   }
   componentDidMount() {
    //get data about all gas station
-   fetch('http://localhost:3001/api/tanks')
+   fetch('https://tankapplatvia.herokuapp.com/api/tanks')
    .then(response => response.json())
    .then(data => this.setState({beDataAll: data}))
    .catch(err => {

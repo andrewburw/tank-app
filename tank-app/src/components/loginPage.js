@@ -71,7 +71,7 @@ sendData = (event) => {
 	   }
 		
 	   
-	   fetch('http://localhost:3001/api/auth/login', {
+	   fetch('https://tankapplatvia.herokuapp.com/api/auth/login', {
 		method: 'POST',
 		headers: {
 		  'Content-Type': 'application/json;charset=utf-8'
