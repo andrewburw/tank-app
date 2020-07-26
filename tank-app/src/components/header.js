@@ -13,7 +13,7 @@ class Header extends Component {
    // check if user alrady loged in 
     const auth = 'Bearer ' + localStorage.getItem('token');
 	
-    fetch('https://tankapplatvia.herokuapp.com/api/auth/test', {
+    fetch('http://localhost:3001/api/auth/test', {
      method: 'POST',
      headers: {
      'Content-Type': 'application/json;charset=utf-8',

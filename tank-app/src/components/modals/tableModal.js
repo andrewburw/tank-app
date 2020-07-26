@@ -40,7 +40,7 @@ handleClickAddToFavorites = (event) => {
 	
    
    
-   fetch('https://tankapplatvia.herokuapp.com/api/addfavorites', {
+   fetch('http://localhost:3001/api/addfavorites', {
 	method: 'PUT',
 	headers: {
 	  'Content-Type': 'application/json;charset=utf-8',
@@ -85,7 +85,7 @@ handleClickremoveFromFavorites = (event) => {
       let dataToSend = {
         "id": this.props.data[0].id
          }
-    fetch('https://tankapplatvia.herokuapp.com/api/removefavorites', {
+    fetch('http://localhost:3001/api/removefavorites', {
      method: 'PUT',
      headers: {
        'Content-Type': 'application/json;charset=utf-8',

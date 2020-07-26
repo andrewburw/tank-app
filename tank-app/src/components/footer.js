@@ -24,7 +24,7 @@ class Footer extends Component {
     </small></div>
 
     <div><small>
-    <strong>Our mailing address is: hornespill@gmail.com</strong></small></div>
+    <strong>Our mailing address is: support@tankapp.com</strong></small></div>
     <div><small><em>Copyright &copy; tankapp.com, All rights reserved.</em></small></div>
 
      </div>
