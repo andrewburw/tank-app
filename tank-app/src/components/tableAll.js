@@ -33,7 +33,7 @@ componentDidMount(){
 	// ************** data test to server fnc *****************
 	const auth = 'Bearer ' + localStorage.getItem('token');
 
-   fetch('http://localhost:3001/api/favorites', {
+   fetch('https://tankapplatvia.herokuapp.com/api/favorites', {
 	method: 'GET',
 	headers: {
 	  'Content-Type': 'application/json;charset=utf-8',
@@ -81,7 +81,7 @@ this.setState({ showPage: 'modalView'});
 }
 ifEditModalPostive = () => {
 // this fetch need if Edit modal made changes , geting fresh data from server
-fetch('http://localhost:3001/api/tanks')
+fetch('https://tankapplatvia.herokuapp.com/api/tanks')
 .then(response => response.json())
 .then(data => {
   this.setState({data2: data})

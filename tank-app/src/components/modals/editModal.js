@@ -110,7 +110,7 @@ let uslessVar = Object.values(this.state.errorsInField).indexOf(false) < 0; // n
       
      
      
-     fetch('http://localhost:3001/api/modyfytank', {
+     fetch('https://tankapplatvia.herokuapp.com/api/modyfytank', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',

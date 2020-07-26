@@ -55,7 +55,7 @@ handleChange = (event) =>{
 	   }
 		
 	   
-	   fetch('http://localhost:3001/api/auth/register', {
+	   fetch('https://tankapplatvia.herokuapp.com/api/auth/register', {
 		method: 'POST',
 		headers: {
 		  'Content-Type': 'application/json;charset=utf-8'
