@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'leaflet/dist/leaflet.css';
-import { Map,  TileLayer } from 'react-leaflet'
+import { Map, Marker, Popup, TileLayer } from 'react-leaflet'
 import L from 'leaflet';
 
 
